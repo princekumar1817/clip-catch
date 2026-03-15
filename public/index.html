@@ -10,6 +10,65 @@
   gtag('config', 'G-6TNVGZZFT9');
 </script>
 <meta charset="UTF-8">
+<meta name="author" content="Prince Kumar">
+<meta name="copyright" content="© 2025 Clip-Catch by Prince Kumar. All rights reserved.">
+<meta name="robots" content="noindex, nofollow">
+```
+
+---
+
+## Then Push to GitHub
+```
+git add .
+git commit -m "protect website from copying"
+git push
+```
+
+---
+
+## What This Protection Does
+
+| Protection | What it blocks |
+|---|---|
+| Right click disabled | Cannot inspect element |
+| F12 blocked | Cannot open DevTools |
+| Ctrl+U blocked | Cannot view source |
+| Ctrl+S blocked | Cannot save page |
+| Ctrl+C blocked | Cannot copy text |
+| Text selection off | Cannot select & copy |
+| DevTools detector | Shows lock screen |
+| Console watermark | Shows your name |
+
+---
+
+## ⚠️ Reality Check
+```
+These tricks stop:
+✅ Casual users (95% of people)
+✅ Copy-paste thieves
+✅ Screenshot of code
+
+These DO NOT stop:
+❌ Expert developers
+   (they can always find ways)
+❌ Browser cache viewing
+❌  Wayback Machine
+```
+
+---
+
+## Best Real Protection = Branding
+```
+The REAL protection is your brand name
+"Clip-Catch by Prince Kumar" everywhere:
+✅ In the footer
+✅ In the page title  
+✅ In meta tags
+✅ In the console
+✅ In your GitHub repo description
+
+If someone copies — your name is
+already all over it! 😄
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clip-Catch — Download Videos Free</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -444,6 +503,20 @@ footer {
   .stat:last-child { border-bottom:none; }
   .section { padding:3rem 1rem; }
 }
+/* ── Disable Selection ── */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ── Disable Image Drag ── */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -743,6 +816,69 @@ function showError(msg){
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmtDur(s){ const m=Math.floor(s/60),sec=Math.floor(s%60),h=Math.floor(m/60); return h>0?`${h}:${String(m%60).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`; }
 function fmtV(n){ if(n>=1e9)return(n/1e9).toFixed(1)+'B'; if(n>=1e6)return(n/1e6).toFixed(1)+'M'; if(n>=1e3)return(n/1e3).toFixed(1)+'K'; return n; }
+</script>
+<script>
+/* ── Disable Right Click ── */
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+/* ── Disable Ctrl+U (View Source) ── */
+document.addEventListener('keydown', e => {
+  // Ctrl+U = view source
+  if (e.ctrlKey && e.key === 'u') e.preventDefault();
+  // Ctrl+S = save page
+  if (e.ctrlKey && e.key === 's') e.preventDefault();
+  // Ctrl+Shift+I = DevTools
+  if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+  // Ctrl+Shift+J = Console
+  if (e.ctrlKey && e.shiftKey && e.key === 'J') e.preventDefault();
+  // Ctrl+Shift+C = Inspector
+  if (e.ctrlKey && e.shiftKey && e.key === 'C') e.preventDefault();
+  // F12 = DevTools
+  if (e.key === 'F12') e.preventDefault();
+  // Ctrl+A = Select All
+  if (e.ctrlKey && e.key === 'a') e.preventDefault();
+  // Ctrl+C = Copy
+  if (e.ctrlKey && e.key === 'c') e.preventDefault();
+});
+
+/* ── Disable Text Selection ── */
+document.addEventListener('selectstart', e => e.preventDefault());
+
+/* ── Disable Drag ── */
+document.addEventListener('dragstart', e => e.preventDefault());
+
+/* ── Disable Copy ── */
+document.addEventListener('copy', e => e.preventDefault());
+
+/* ── Detect DevTools Open ── */
+setInterval(() => {
+  const threshold = 160;
+  if (
+    window.outerWidth - window.innerWidth > threshold ||
+    window.outerHeight - window.innerHeight > threshold
+  ) {
+    document.body.innerHTML = `
+      <div style="
+        display:flex;flex-direction:column;align-items:center;
+        justify-content:center;height:100vh;background:#0f0c29;
+        color:#a78bfa;font-family:sans-serif;text-align:center;gap:16px;
+      ">
+        <div style="font-size:60px">🔒</div>
+        <div style="font-size:24px;font-weight:700">Access Denied</div>
+        <div style="color:#94a3b8;font-size:15px">
+          Developer tools are not allowed on this site.
+        </div>
+        <div style="color:#94a3b8;font-size:13px">
+          © Clip-Catch by Prince Kumar
+        </div>
+      </div>`;
+  }
+}, 1000);
+
+/* ── Watermark in Console ── */
+console.log('%c🎬 Clip-Catch', 'color:#a78bfa;font-size:30px;font-weight:bold');
+console.log('%cBuilt by Prince Kumar — princekumarsingh1817@gmail.com', 'color:#f472b6;font-size:14px');
+console.log('%c⚠️ This code is protected. Copying is not allowed.', 'color:#f87171;font-size:14px;font-weight:bold');
 </script>
 </body>
 </html>
