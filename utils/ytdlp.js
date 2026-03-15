@@ -38,11 +38,12 @@ function runYtdlp(args, timeoutMs = 30000) {
  * Returns a structured object ready for the frontend.
  */
 async function getInfo(url) {
-  const args = [
+const args = [
     '--dump-json',
     '--no-playlist',
     '--no-warnings',
     '--geo-bypass',
+    '--user-agent', 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36',
     url,
   ];
 
@@ -111,21 +112,23 @@ async function downloadMedia(url, formatId = 'bestvideo+bestaudio/best') {
 
   if (formatId === 'mp3') {
     // Extract audio and convert to MP3
-    args = [
+args = [
       '--no-playlist',
       '--no-warnings',
       '--geo-bypass',
+      '--user-agent', 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36',
       '-x',
       '--audio-format', 'mp3',
-      '--audio-quality', '0',   // best
+      '--audio-quality', '0',
       '-o', outputTpl,
       url,
     ];
   } else {
-    args = [
+args = [
       '--no-playlist',
       '--no-warnings',
       '--geo-bypass',
+      '--user-agent', 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.91 Mobile Safari/537.36',
       '-f', formatId,
       '--merge-output-format', 'mp4',
       '-o', outputTpl,

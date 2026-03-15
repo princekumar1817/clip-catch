@@ -35,7 +35,7 @@ const SUPPORTED_PLATFORMS = {
       /^https?:\/\/vt\.tiktok\.com\//,
     ],
   },
-  facebook: {
+facebook: {
     name: 'Facebook',
     icon: '📘',
     color: '#1877f2',
@@ -44,6 +44,10 @@ const SUPPORTED_PLATFORMS = {
       /^https?:\/\/(www\.)?facebook\.com\/watch/,
       /^https?:\/\/(www\.)?facebook\.com\/reel\//,
       /^https?:\/\/fb\.watch\//,
+      /^https?:\/\/(www\.)?facebook\.com\/share\/v\//,
+      /^https?:\/\/(www\.)?facebook\.com\/share\/r\//,
+      /^https?:\/\/m\.facebook\.com\//,
+      /facebook\.com/,
     ],
   },
   twitter: {

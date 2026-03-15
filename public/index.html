@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6TNVGZZFT9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6TNVGZZFT9');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clip-Catch — Download Videos Free</title>
@@ -606,7 +614,7 @@ const PLATS = {
   youtube:   {name:'YouTube',  icon:'▶️', patterns:[/youtube\.com\/watch/,/youtu\.be\//,/youtube\.com\/shorts\//]},
   instagram: {name:'Instagram',icon:'📸', patterns:[/instagram\.com\/reel\//,/instagram\.com\/p\//,/instagram\.com\/tv\//]},
   tiktok:    {name:'TikTok',   icon:'🎵', patterns:[/tiktok\.com\/@.+\/video\//,/vm\.tiktok\.com\//]},
-  facebook:  {name:'Facebook', icon:'📘', patterns:[/facebook\.com\/.*\/videos\//,/fb\.watch\//,/facebook\.com\/watch/,/facebook\.com\/reel\//]},
+  facebook:  {name:'Facebook', icon:'📘', patterns:[/facebook\.com\/.*\/videos\//,/fb\.watch\//,/facebook\.com\/watch/,/facebook\.com\/reel\//,/facebook\.com\/share\/v\//,/facebook\.com\/share\/r\//,/m\.facebook\.com\//,/facebook\.com/]},
   twitter:   {name:'Twitter/X',icon:'🐦', patterns:[/(twitter|x)\.com\/.+\/status\//]},
 };
 function detect(url){ for(const[k,d]of Object.entries(PLATS)) if(d.patterns.some(p=>p.test(url))) return{key:k,...d}; return null; }
