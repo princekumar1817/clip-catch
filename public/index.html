@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clip-Catch — Download Videos Free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent: #a78bfa;
+  --accent2: #f472b6;
+  --accent3: #34d399;
+  --gold: #fbbf24;
+  --text: #f1f0ff;
+  --muted: #94a3b8;
+  --surf: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.1);
+  --borderHv: rgba(167,139,250,0.5);
+  --r: 16px; --rsm: 10px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #0f0c29;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Background ── */
+.bg {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%, rgba(139,92,246,0.38) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 65% at 85% 90%, rgba(244,114,182,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(48,43,99,0.7) 0%, transparent 70%),
+    linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+.bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(167,139,250,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,139,250,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridDrift 25s linear infinite;
+}
+@keyframes gridDrift { to { transform: translateY(60px); } }
+
+.orb {
+  position: fixed; border-radius: 50%;
+  filter: blur(90px); pointer-events: none; z-index: 0;
+  animation: orbF ease-in-out infinite alternate;
+}
+.orb1 { width:550px;height:550px;top:-180px;left:-120px;background:radial-gradient(circle,rgba(139,92,246,.28),transparent 65%);animation-duration:13s; }
+.orb2 { width:420px;height:420px;bottom:-100px;right:-80px;background:radial-gradient(circle,rgba(244,114,182,.2),transparent 65%);animation-duration:16s; }
+.orb3 { width:300px;height:300px;top:38%;left:62%;background:radial-gradient(circle,rgba(52,211,153,.12),transparent 65%);animation-duration:20s; }
+@keyframes orbF { from{transform:translate(0,0)scale(1)} to{transform:translate(25px,35px)scale(1.08)} }
+
+/* ── Header ── */
+header {
+  position: relative; z-index: 100;
+  padding: 1.1rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  background: rgba(15,12,41,0.55);
+}
+.logo { display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text); }
+.logo-icon {
+  width:38px;height:38px;border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;box-shadow:0 4px 18px rgba(167,139,250,0.45);flex-shrink:0;
+}
+.logo-text { font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em; }
+.logo-text span { color:var(--accent); }
+.nav-pills { display:flex;gap:6px;flex-wrap:wrap; }
+.npill {
+  padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;
+  border:1px solid var(--border);background:var(--surf);color:var(--muted);transition:all .2s;cursor:default;
+}
+.npill.yt  { border-color:rgba(255,70,70,.3); color:#f87171; }
+.npill.ig  { border-color:rgba(244,114,182,.3); color:#f9a8d4; }
+.npill.fb  { border-color:rgba(96,165,250,.3); color:#93c5fd; }
+.npill.tt  { border-color:rgba(200,200,255,.2); color:#c4b5fd; }
+.npill.tw  { border-color:rgba(56,189,248,.3); color:#7dd3fc; }
+
+/* ── Hero ── */
+.hero {
+  position:relative;z-index:10;
+  max-width:780px;margin:0 auto;
+  padding:5.5rem 1.5rem 3rem;
+  text-align:center;
+}
+.stars { position:absolute;top:0;left:50%;transform:translateX(-50%);width:640px;height:220px;pointer-events:none; }
+.star { position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:.15;transform:scale(1)} 50%{opacity:1;transform:scale(1.6)} }
+
+.badge {
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.28);
+  color:var(--accent);padding:7px 18px;border-radius:20px;
+  font-size:13px;font-weight:500;margin-bottom:1.75rem;
+}
+.badge-dot { width:6px;height:6px;border-radius:50%;background:var(--accent3);animation:blink 2s ease-in-out infinite;box-shadow:0 0 7px var(--accent3); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+
+h1 {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.4rem,7.5vw,4.2rem);
+  font-weight:800;letter-spacing:-.04em;line-height:1.05;
+  margin-bottom:1.2rem;
+}
+.grad {
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 50%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200%;animation:gShift 4s ease-in-out infinite alternate;
+}
+@keyframes gShift { from{background-position:0%} to{background-position:100%} }
+
+.subtitle {
+  color:var(--muted);font-size:1.1rem;line-height:1.7;
+  max-width:500px;margin:0 auto 3rem;font-weight:300;
+}
+
+/* ── Search Card ── */
+.search-card {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:22px;padding:1.5rem;
+  backdrop-filter:blur(24px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.1);
+  margin-bottom:1rem;transition:border-color .3s,box-shadow .3s;
+}
+.search-card:focus-within {
+  border-color:rgba(167,139,250,.45);
+  box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 0 4px rgba(167,139,250,.12),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.url-row { display:flex;align-items:center;gap:10px;margin-bottom:12px; }
+.p-pill {
+  width:42px;height:42px;border-radius:var(--rsm);
+  background:rgba(255,255,255,0.08);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;transition:all .3s;
+}
+#urlInput {
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--text);font-family:'Outfit',sans-serif;font-size:1rem;min-width:0;
+}
+#urlInput::placeholder { color:rgba(148,163,184,.55); }
+.btn-paste {
+  background:rgba(255,255,255,0.07);border:1px solid var(--border);
+  color:var(--muted);border-radius:var(--rsm);
+  padding:8px 14px;font-size:12.5px;font-family:'Outfit',sans-serif;
+  cursor:pointer;flex-shrink:0;transition:all .2s;white-space:nowrap;
+}
+.btn-paste:hover { border-color:var(--borderHv);color:var(--accent);background:rgba(167,139,250,.1); }
+
+.detect-strip {
+  display:none;align-items:center;gap:8px;
+  font-size:12.5px;color:var(--accent3);margin-bottom:10px;padding:0 2px;
+  animation:fSlide .2s ease;
+}
+.detect-strip.show { display:flex; }
+.dsdot { width:6px;height:6px;border-radius:50%;background:var(--accent3);box-shadow:0 0 6px var(--accent3); }
+@keyframes fSlide { from{opacity:0;transform:translateY(-5px)} to{opacity:1;transform:none} }
+
+.btn-dl {
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,#7c3aed 0%,#a78bfa 50%,#c084fc 100%);
+  background-size:200%;
+  border:none;border-radius:var(--rsm);
+  color:#fff;font-size:1.05rem;font-weight:700;
+  font-family:'Space Grotesk',sans-serif;letter-spacing:.01em;
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 8px 28px rgba(124,58,237,.45);
+  animation:btnP 3s ease-in-out infinite;
+}
+@keyframes btnP {
+  0%,100%{background-position:0%;box-shadow:0 8px 28px rgba(124,58,237,.45)}
+  50%{background-position:100%;box-shadow:0 8px 38px rgba(167,139,250,.65)}
+}
+.btn-dl:hover { transform:translateY(-2px);box-shadow:0 14px 38px rgba(124,58,237,.65); }
+.btn-dl:active { transform:translateY(0); }
+.btn-dl:disabled { opacity:.45;cursor:not-allowed;transform:none;animation:none; }
+.spin {
+  width:18px;height:18px;
+  border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;
+  border-radius:50%;animation:spinA .6s linear infinite;display:none;
+}
+@keyframes spinA { to{transform:rotate(360deg)} }
+
+/* Platform icon row */
+.plat-row {
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  padding:.9rem 0;color:var(--muted);font-size:12px;
+}
+.plat-row::before,.plat-row::after {
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08));
+}
+.plat-row::after { background:linear-gradient(270deg,transparent,rgba(255,255,255,.08)); }
+.plat-icons { display:flex;align-items:center;gap:14px; }
+.pic { display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:var(--muted);transition:all .2s; }
+.pic:hover { color:var(--accent);transform:translateY(-2px); }
+.pic .i { font-size:22px; }
+
+/* ── Result ── */
+#result { margin-top:1.5rem;display:none;animation:riseUp .45s cubic-bezier(.16,1,.3,1); }
+@keyframes riseUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+#result.show { display:block; }
+
+.res-card {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;
+  backdrop-filter:blur(20px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+  text-align:left;
+}
+.res-top {
+  display:flex;gap:16px;padding:1.3rem;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  align-items:flex-start;
+}
+.res-thumb {
+  width:145px;height:94px;flex-shrink:0;
+  border-radius:10px;overflow:hidden;
+  background:rgba(255,255,255,.05);position:relative;
+  box-shadow:0 8px 22px rgba(0,0,0,.4);
+}
+.res-thumb img { width:100%;height:100%;object-fit:cover;display:block; }
+.play-ov {
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.35);font-size:24px;opacity:0;transition:opacity .2s;
+}
+.res-thumb:hover .play-ov { opacity:1; }
+.res-info { flex:1;min-width:0; }
+.res-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.95rem;font-weight:600;line-height:1.4;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.res-tags { display:flex;gap:7px;flex-wrap:wrap; }
+.rtag {
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:3px 11px;font-size:11.5px;color:var(--muted);
+}
+.rtag.plat { background:rgba(167,139,250,.12);border-color:rgba(167,139,250,.25);color:var(--accent); }
+
+.res-formats { padding:1.3rem; }
+.fmts-head {
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:1rem;
+  display:flex;align-items:center;gap:8px;
+}
+.fmts-head::after { content:'';flex:1;height:1px;background:rgba(255,255,255,.07); }
+
+.fmts-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:9px; }
+.fmt-btn {
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--rsm);padding:11px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  cursor:pointer;transition:all .2s;text-align:left;
+  font-family:'Outfit',sans-serif;position:relative;overflow:hidden;color:var(--text);
+}
+.fmt-btn:hover {
+  border-color:rgba(167,139,250,.5);background:rgba(167,139,250,.1);
+  transform:translateY(-1px);box-shadow:0 4px 18px rgba(167,139,250,.2);
+}
+.fmt-btn:active { transform:none; }
+.fmt-btn.active { border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.08); }
+.fmt-main { font-size:13px;font-weight:600; }
+.fmt-sub  { font-size:11px;color:var(--muted);margin-top:2px; }
+.fmt-ic   { font-size:15px;flex-shrink:0;opacity:.6;transition:opacity .2s,transform .2s; }
+.fmt-btn:hover .fmt-ic { opacity:1;transform:translateY(2px); }
+.fmt-bar {
+  position:absolute;bottom:0;left:0;height:2.5px;width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent3));
+  border-radius:0 0 var(--rsm) var(--rsm);transition:width .3s ease;
+}
+
+.res-notice {
+  margin:0 1.3rem 1.3rem;
+  background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);
+  border-radius:var(--rsm);padding:10px 14px;
+  font-size:12px;color:rgba(52,211,153,.9);line-height:1.6;
+  display:flex;gap:8px;align-items:flex-start;
+}
+.err-card {
+  background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);
+  border-radius:var(--rsm);padding:14px 16px;
+  display:flex;align-items:center;gap:10px;
+  font-size:13.5px;color:#fca5a5;backdrop-filter:blur(10px);
+}
+
+/* ── Stats bar ── */
+.stats-bar {
+  display:flex;justify-content:center;
+  margin:3rem auto 0;max-width:560px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;overflow:hidden;backdrop-filter:blur(10px);
+}
+.stat {
+  flex:1;padding:1.1rem 1rem;text-align:center;
+  border-right:1px solid rgba(255,255,255,.07);
+}
+.stat:last-child { border-right:none; }
+.stat-n {
+  font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;
+}
+.stat-l { font-size:11.5px;color:var(--muted);margin-top:3px; }
+
+/* ── Sections ── */
+.section { max-width:780px;margin:0 auto;padding:4rem 1.5rem;position:relative;z-index:10; }
+.sec-label { text-align:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.6rem; }
+.sec-title {
+  text-align:center;font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;letter-spacing:-.03em;
+  margin-bottom:2.5rem;
+}
+
+.steps-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px; }
+.step-card {
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:1.3rem 1.1rem;transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.step-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity .25s;
+}
+.step-card:hover { border-color:rgba(167,139,250,.3);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.3); }
+.step-card:hover::before { opacity:1; }
+.step-num { font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:.8rem;opacity:.8; }
+.step-icon { font-size:26px;margin-bottom:.6rem;display:block; }
+.step-t { font-weight:600;font-size:.95rem;margin-bottom:4px; }
+.step-d { color:var(--muted);font-size:12.5px;line-height:1.55;font-weight:300; }
+
+.plat-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px; }
+.plat-card {
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:1.2rem 1rem;text-align:center;transition:all .25s;
+}
+.plat-card:hover { border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.07);transform:translateY(-2px); }
+.plat-card .pi { font-size:26px;margin-bottom:7px;display:block; }
+.plat-card .pn { font-weight:600;font-size:13px; }
+.plat-card .ps { color:var(--muted);font-size:11px;margin-top:3px; }
+
+/* ── Footer ── */
+footer {
+  position:relative;z-index:10;
+  background:rgba(0,0,0,.45);
+  border-top:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);
+  color:var(--muted);font-size:13px;
+}
+.footer-inner {
+  max-width:900px;margin:0 auto;
+  padding:3rem 2rem 2rem;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:2.5rem;
+  text-align:left;
+}
+.footer-brand .footer-logo {
+  font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:inline-block;margin-bottom:.6rem;
+}
+.footer-brand p { line-height:1.7;font-size:13px;color:var(--muted);max-width:240px; }
+.footer-col h4 {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:1rem;
+}
+.footer-col ul { list-style:none; }
+.footer-col ul li { margin-bottom:.65rem; }
+.footer-col ul li a {
+  color:var(--muted);text-decoration:none;font-size:13px;
+  display:flex;align-items:center;gap:9px;transition:color .2s;
+}
+.footer-col ul li a:hover { color:var(--accent); }
+.flink-icon {
+  width:28px;height:28px;border-radius:7px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0;transition:background .2s,border-color .2s;
+}
+.footer-col ul li a:hover .flink-icon { background:rgba(167,139,250,.15);border-color:rgba(167,139,250,.4); }
+.fci { display:flex;align-items:flex-start;gap:10px;margin-bottom:.8rem; }
+.fci-icon {
+  width:30px;height:30px;border-radius:8px;flex-shrink:0;margin-top:1px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+}
+.fci-lbl { font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.28);margin-bottom:2px; }
+.fci-val { font-size:12.5px;color:var(--muted); }
+.fci-val a { color:var(--muted);text-decoration:none;word-break:break-all;transition:color .2s; }
+.fci-val a:hover { color:var(--accent); }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:1.2rem 2rem;max-width:900px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:.5rem;
+  font-size:12px;color:rgba(255,255,255,.22);
+}
+.footer-bottom a { color:rgba(167,139,250,.5);text-decoration:none; }
+.footer-bottom a:hover { color:var(--accent); }
+@media(max-width:640px){
+  .footer-inner { grid-template-columns:1fr;gap:2rem; }
+  .footer-bottom { flex-direction:column;text-align:center; }
+}
+
+/* ── Mobile ── */
+@media(max-width:600px){
+  header { padding:1rem;flex-direction:column;gap:.8rem;align-items:flex-start; }
+  .nav-pills { display:none; }
+  .hero { padding:3rem 1rem 2rem; }
+  h1 { font-size:2.2rem; }
+  .res-top { flex-direction:column; }
+  .res-thumb { width:100%;height:180px; }
+  .stats-bar { flex-direction:column;border-radius:16px; }
+  .stat { border-right:none;border-bottom:1px solid rgba(255,255,255,.07); }
+  .stat:last-child { border-bottom:none; }
+  .section { padding:3rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<header>
+  <a href="/" class="logo">
+    <div class="logo-icon">🎬</div>
+    <div class="logo-text">Clip<span>-Catch</span></div>
+  </a>
+  <nav class="nav-pills">
+    <span class="npill yt">YouTube</span>
+    <span class="npill ig">Instagram</span>
+    <span class="npill fb">Facebook</span>
+    <span class="npill tt">TikTok</span>
+    <span class="npill tw">Twitter/X</span>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <div class="stars" id="stars"></div>
+
+  <div class="badge"><div class="badge-dot"></div>Free · No signup · Powered by yt-dlp</div>
+
+  <h1>Catch any <span class="grad">video clip</span><br>in seconds</h1>
+  <p class="subtitle">Paste a link from YouTube, Instagram, TikTok, Facebook, or Twitter/X — pick your quality and download free forever.</p>
+
+  <div class="search-card">
+    <div class="url-row">
+      <div class="p-pill" id="pPill">🔗</div>
+      <input type="url" id="urlInput" placeholder="Paste your video or photo URL here…" autocomplete="off" spellcheck="false"/>
+      <button class="btn-paste" id="pasteBtn">📋 Paste</button>
+    </div>
+    <div class="detect-strip" id="dStrip">
+      <div class="dsdot"></div>
+      <span id="dLabel">Platform detected</span>
+    </div>
+    <button class="btn-dl" id="fetchBtn" onclick="fetchInfo()">
+      <span id="btnLabel">⬇ Get Download Options</span>
+      <div class="spin" id="spinner"></div>
+    </button>
+  </div>
+
+  <div class="plat-row">
+    <div class="plat-icons">
+      <div class="pic"><span class="i">▶️</span>YouTube</div>
+      <div class="pic"><span class="i">📸</span>Instagram</div>
+      <div class="pic"><span class="i">🎵</span>TikTok</div>
+      <div class="pic"><span class="i">📘</span>Facebook</div>
+      <div class="pic"><span class="i">🐦</span>Twitter/X</div>
+    </div>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-n">5+</span><div class="stat-l">Platforms</div></div>
+    <div class="stat"><span class="stat-n">4K</span><div class="stat-l">Max Quality</div></div>
+    <div class="stat"><span class="stat-n">₹0</span><div class="stat-l">Cost Forever</div></div>
+    <div class="stat"><span class="stat-n">MP3</span><div class="stat-l">Audio Export</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label">Simple Process</div>
+  <div class="sec-title">How Clip-Catch works</div>
+  <div class="steps-grid">
+    <div class="step-card"><div class="step-num">STEP 01</div><span class="step-icon">🔗</span><div class="step-t">Paste the link</div><div class="step-d">Copy any video URL and paste it in the box above.</div></div>
+    <div class="step-card"><div class="step-num">STEP 02</div><span class="step-icon">🔍</span><div class="step-t">Auto detect</div><div class="step-d">Clip-Catch instantly recognizes the platform and fetches info.</div></div>
+    <div class="step-card"><div class="step-num">STEP 03</div><span class="step-icon">🎚️</span><div class="step-t">Pick quality</div><div class="step-d">Choose 4K, 1080p, 720p, 480p, or MP3 audio.</div></div>
+    <div class="step-card"><div class="step-num">STEP 04</div><span class="step-icon">💾</span><div class="step-t">Download free</div><div class="step-d">File streams directly to your device. No watermarks ever.</div></div>
+  </div>
+</div>
+
+<div class="section" style="padding-top:0">
+  <div class="sec-label">Compatibility</div>
+  <div class="sec-title">Supported platforms</div>
+  <div class="plat-grid">
+    <div class="plat-card"><span class="pi">▶️</span><div class="pn">YouTube</div><div class="ps">Videos · Shorts · Audio</div></div>
+    <div class="plat-card"><span class="pi">📸</span><div class="pn">Instagram</div><div class="ps">Reels · Posts · Stories</div></div>
+    <div class="plat-card"><span class="pi">📘</span><div class="pn">Facebook</div><div class="ps">Videos · Reels</div></div>
+    <div class="plat-card"><span class="pi">🎵</span><div class="pn">TikTok</div><div class="ps">No watermark</div></div>
+    <div class="plat-card"><span class="pi">🐦</span><div class="pn">Twitter / X</div><div class="ps">Videos · GIFs</div></div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <div class="footer-logo">🎬 Clip-Catch</div>
+      <p>A free, fast media downloader for YouTube, Instagram, TikTok, Facebook &amp; Twitter/X. No signup. No cost. Forever.</p>
+    </div>
+
+    <!-- Quick links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#"><span class="flink-icon">🏠</span>Home</a></li>
+        <li><a href="#"><span class="flink-icon">▶️</span>YouTube Download</a></li>
+        <li><a href="#"><span class="flink-icon">📸</span>Instagram Download</a></li>
+        <li><a href="#"><span class="flink-icon">🎵</span>TikTok Download</a></li>
+        <li><a href="#"><span class="flink-icon">📘</span>Facebook Download</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact column -->
+    <div class="footer-col">
+      <h4>Contact &amp; Developer</h4>
+
+      <div class="fci">
+        <div class="fci-icon">✉️</div>
+        <div>
+          <div class="fci-lbl">Email</div>
+          <div class="fci-val">
+            <a href="mailto:princekumarsingh1817@gmail.com">princekumarsingh1817@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fci">
+        <div class="fci-icon">💼</div>
+        <div>
+          <div class="fci-lbl">LinkedIn</div>
+          <div class="fci-val">
+            <a href="https://www.linkedin.com/in/prince-kumar-400134247/" target="_blank" rel="noopener">Prince Kumar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fci">
+        <div class="fci-icon">🐙</div>
+        <div>
+          <div class="fci-lbl">GitHub</div>
+          <div class="fci-val">
+            <a href="https://github.com/princekumar1817" target="_blank" rel="noopener">@princekumar1817</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 Clip-Catch · Built by <a href="https://github.com/princekumar1817" target="_blank">Prince Kumar</a> · Powered by yt-dlp</span>
+    <span>For personal use only · Respect copyright &amp; platform terms of service</span>
+  </div>
+</footer>
+
+<script>
+/* ── Stars ── */
+const sc = document.getElementById('stars');
+for(let i=0;i<45;i++){
+  const s=document.createElement('div'); s.className='star';
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${1.5+Math.random()*3}s;animation-delay:${Math.random()*4}s;opacity:${0.2+Math.random()*0.7};${Math.random()>.8?'width:3px;height:3px':''}`;
+  sc.appendChild(s);
+}
+
+/* ── Platform detection ── */
+const PLATS = {
+  youtube:   {name:'YouTube',  icon:'▶️', patterns:[/youtube\.com\/watch/,/youtu\.be\//,/youtube\.com\/shorts\//]},
+  instagram: {name:'Instagram',icon:'📸', patterns:[/instagram\.com\/reel\//,/instagram\.com\/p\//,/instagram\.com\/tv\//]},
+  tiktok:    {name:'TikTok',   icon:'🎵', patterns:[/tiktok\.com\/@.+\/video\//,/vm\.tiktok\.com\//]},
+  facebook:  {name:'Facebook', icon:'📘', patterns:[/facebook\.com\/.*\/videos\//,/fb\.watch\//,/facebook\.com\/watch/,/facebook\.com\/reel\//]},
+  twitter:   {name:'Twitter/X',icon:'🐦', patterns:[/(twitter|x)\.com\/.+\/status\//]},
+};
+function detect(url){ for(const[k,d]of Object.entries(PLATS)) if(d.patterns.some(p=>p.test(url))) return{key:k,...d}; return null; }
+
+const urlInput=document.getElementById('urlInput'),pPill=document.getElementById('pPill'),dStrip=document.getElementById('dStrip'),dLabel=document.getElementById('dLabel');
+
+function liveDetect(){
+  const p=detect(urlInput.value.trim());
+  if(p){
+    pPill.textContent=p.icon; pPill.style.background='rgba(167,139,250,.15)'; pPill.style.borderColor='rgba(167,139,250,.4)';
+    dLabel.textContent=p.name+' link detected ✓'; dStrip.classList.add('show');
+  } else {
+    pPill.textContent='🔗'; pPill.style.background=''; pPill.style.borderColor=''; dStrip.classList.remove('show');
+  }
+}
+urlInput.addEventListener('input',liveDetect);
+urlInput.addEventListener('keydown',e=>{ if(e.key==='Enter') fetchInfo(); });
+
+document.getElementById('pasteBtn').addEventListener('click',async()=>{
+  try{ const t=await navigator.clipboard.readText(); urlInput.value=t; liveDetect(); }
+  catch{ urlInput.focus(); }
+});
+
+/* ── Fetch info ── */
+async function fetchInfo(){
+  const url=urlInput.value.trim(), result=document.getElementById('result');
+  if(!url){ showError('Please paste a video or photo URL first.'); return; }
+  const plat=detect(url);
+  if(!plat){ showError('Platform not supported. Supported: YouTube, Instagram, TikTok, Facebook, Twitter/X.'); return; }
+  setLoading(true); result.innerHTML=''; result.classList.remove('show');
+  try{
+    const res=await fetch('/api/info',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+    const data=await res.json();
+    if(!res.ok||data.error){ showError(data.error||'Failed to fetch media info.'); return; }
+    renderResult(data,url,plat);
+  }catch(err){ showError('Cannot reach server. Make sure npm start is running. ('+err.message+')'); }
+  finally{ setLoading(false); }
+}
+
+/* ── Render result ── */
+function renderResult(data,url,plat){
+  const result=document.getElementById('result');
+  const thumb=data.thumbnail
+    ?`<img src="${data.thumbnail}" alt="thumb" onerror="this.style.display='none'"><div class="play-ov">▶</div>`
+    :`<div class="play-ov" style="opacity:1;background:rgba(255,255,255,0.05);font-size:32px;">${plat.icon}</div>`;
+  const dur=data.duration?fmtDur(data.duration):null;
+  const views=data.view_count?fmtV(data.view_count)+' views':null;
+  const fmts=buildFmts(data.formats||[]);
+  const fhtml=fmts.map((f,i)=>`
+    <button class="fmt-btn" id="fb${i}" onclick="startDl(this,'${encodeURIComponent(url)}','${f.fid}','${encodeURIComponent(data.title||'media')}','pb${i}','ic${i}')">
+      <div><div class="fmt-main">${f.label}</div><div class="fmt-sub">${f.sub}</div></div>
+      <span class="fmt-ic" id="ic${i}">↓</span>
+      <div class="fmt-bar" id="pb${i}"></div>
+    </button>`).join('');
+  result.innerHTML=`
+    <div class="res-card">
+      <div class="res-top">
+        <div class="res-thumb">${thumb}</div>
+        <div class="res-info">
+          <div class="res-title">${esc(data.title||'Untitled')}</div>
+          <div class="res-tags">
+            <span class="rtag plat">${plat.icon} ${data.platform||plat.name}</span>
+            ${data.uploader?`<span class="rtag">👤 ${esc(data.uploader)}</span>`:''}
+            ${dur?`<span class="rtag">⏱ ${dur}</span>`:''}
+            ${views?`<span class="rtag">👁 ${views}</span>`:''}
+          </div>
+        </div>
+      </div>
+      <div class="res-formats">
+        <div class="fmts-head">Download Options</div>
+        <div class="fmts-grid">${fhtml||'<p style="color:var(--muted);font-size:13px">No formats found.</p>'}</div>
+      </div>
+      <div class="res-notice"><span>⚡</span><span>Files fetched server-side via yt-dlp and streamed directly to you — no third-party redirects, no permanent storage.</span></div>
+    </div>`;
+  result.classList.add('show');
+}
+
+/* ── Download ── */
+async function startDl(btn,eUrl,fid,eTitle,pbId,icId){
+  const url=decodeURIComponent(eUrl), title=decodeURIComponent(eTitle);
+  const pb=document.getElementById(pbId), ic=document.getElementById(icId);
+  btn.classList.add('active'); ic.textContent='…';
+  let w=0; const tk=setInterval(()=>{ w=Math.min(w+Math.random()*3.5,88); if(pb)pb.style.width=w+'%'; },220);
+  try{
+    const res=await fetch('/api/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url,formatId:fid,title})});
+    if(!res.ok){ const e=await res.json().catch(()=>({error:'Download failed.'})); alert('Error: '+(e.error||'Download failed.')); return; }
+    const cd=res.headers.get('Content-Disposition')||'', match=cd.match(/filename="?([^"]+)"?/);
+    const filename=match?match[1]:title+'.mp4';
+    const blob=await res.blob(), obj=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=obj; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(obj);
+    if(pb)pb.style.width='100%'; ic.textContent='✓'; ic.style.color='#34d399';
+  }catch(err){ alert('Network error: '+err.message); ic.textContent='↓'; }
+  finally{
+    clearInterval(tk);
+    setTimeout(()=>{ btn.classList.remove('active'); if(pb)pb.style.width='0%'; if(ic.textContent!=='✓')ic.textContent='↓'; },4000);
+  }
+}
+
+/* ── Build formats ── */
+function buildFmts(raw){
+  const list=[],seen=new Set();
+  const presets=[
+    {res:'2160',label:'4K Ultra HD',  sub:'MP4 · 2160p',  fid:'bestvideo[height<=2160]+bestaudio/best[height<=2160]'},
+    {res:'1080',label:'Full HD 1080p',sub:'MP4 · 1080p',   fid:'bestvideo[height<=1080]+bestaudio/best[height<=1080]'},
+    {res:'720', label:'HD 720p',      sub:'MP4 · 720p',    fid:'bestvideo[height<=720]+bestaudio/best[height<=720]'},
+    {res:'480', label:'SD 480p',      sub:'MP4 · 480p',    fid:'bestvideo[height<=480]+bestaudio/best[height<=480]'},
+    {res:'360', label:'Low 360p',     sub:'MP4 · 360p',    fid:'bestvideo[height<=360]+bestaudio/best[height<=360]'},
+  ];
+  const maxH=Math.max(...raw.filter(f=>f.isVideo).map(f=>parseInt(f.resolution)||0),0);
+  presets.forEach(p=>{ if(maxH>=parseInt(p.res)&&!seen.has(p.res)){ seen.add(p.res); list.push(p); } });
+  if(!list.length) list.push({label:'Best Quality',sub:'MP4 · Best available',fid:'bestvideo+bestaudio/best'});
+  list.push({label:'MP3 Audio',sub:'Audio only · 320kbps',fid:'mp3'});
+  return list;
+}
+
+/* ── Helpers ── */
+function setLoading(on){
+  const b=document.getElementById('fetchBtn'),l=document.getElementById('btnLabel'),s=document.getElementById('spinner');
+  b.disabled=on; l.style.display=on?'none':'inline'; s.style.display=on?'block':'none';
+}
+function showError(msg){
+  const r=document.getElementById('result');
+  r.innerHTML=`<div class="err-card"><span style="font-size:20px">⚠️</span><span>${esc(msg)}</span></div>`;
+  r.classList.add('show');
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtDur(s){ const m=Math.floor(s/60),sec=Math.floor(s%60),h=Math.floor(m/60); return h>0?`${h}:${String(m%60).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`; }
+function fmtV(n){ if(n>=1e9)return(n/1e9).toFixed(1)+'B'; if(n>=1e6)return(n/1e6).toFixed(1)+'M'; if(n>=1e3)return(n/1e3).toFixed(1)+'K'; return n; }
+</script>
+</body>
+</html>

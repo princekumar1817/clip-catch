@@ -1,0 +1,12 @@
+# nixpacks.toml — for Railway, Render, and nixpacks-based deployments
+# This installs yt-dlp and ffmpeg alongside Node.js automatically.
+
+[phases.setup]
+nixPkgs = ["ffmpeg"]
+cmds = ["pip install yt-dlp"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[start]
+cmd = "npm start"
