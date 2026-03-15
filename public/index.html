@@ -851,29 +851,9 @@ document.addEventListener('dragstart', e => e.preventDefault());
 document.addEventListener('copy', e => e.preventDefault());
 
 /* ── Detect DevTools Open ── */
-setInterval(() => {
-  const threshold = 160;
-  if (
-    window.outerWidth - window.innerWidth > threshold ||
-    window.outerHeight - window.innerHeight > threshold
-  ) {
-    document.body.innerHTML = `
-      <div style="
-        display:flex;flex-direction:column;align-items:center;
-        justify-content:center;height:100vh;background:#0f0c29;
-        color:#a78bfa;font-family:sans-serif;text-align:center;gap:16px;
-      ">
-        <div style="font-size:60px">🔒</div>
-        <div style="font-size:24px;font-weight:700">Access Denied</div>
-        <div style="color:#94a3b8;font-size:15px">
-          Developer tools are not allowed on this site.
-        </div>
-        <div style="color:#94a3b8;font-size:13px">
-          © Clip-Catch by Prince Kumar
-        </div>
-      </div>`;
-  }
-}, 1000);
+console.log('%c🎬 Clip-Catch', 'color:#a78bfa;font-size:30px;font-weight:bold');
+console.log('%cBuilt by Prince Kumar — princekumarsingh1817@gmail.com', 'color:#f472b6;font-size:14px');
+console.log('%c⚠️ This code is protected. Copying is not allowed.', 'color:#f87171;font-size:14px;font-weight:bold');
 
 /* ── Watermark in Console ── */
 console.log('%c🎬 Clip-Catch', 'color:#a78bfa;font-size:30px;font-weight:bold');
