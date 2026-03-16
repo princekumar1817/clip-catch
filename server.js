@@ -73,5 +73,13 @@ app.listen(PORT, () => {
   console.log(`📦  Make sure yt-dlp is installed: pip install yt-dlp`);
   console.log(`🎬  Make sure ffmpeg is installed: brew/apt install ffmpeg\n`);
 });
-
+/* ── Keep Render Awake (ping every 14 min) ── */
+const https = require('https');
+setInterval(() => {
+  https.get('https://clip-catch.onrender.com', (res) => {
+    console.log(`[keep-alive] pinged → ${res.statusCode}`);
+  }).on('error', (err) => {
+    console.log('[keep-alive] failed:', err.message);
+  });
+}, 14 * 60 * 1000);
 module.exports = app;
